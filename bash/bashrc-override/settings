@@ -1,0 +1,27 @@
+# shellcheck disable=SC2148
+# (‾)-'"""""'-(‾)
+#  /           \
+# /   Ō  ●  Ō   \
+# \   "( - )"   /
+#  '-.._____..-'
+typeset BASH_MODULE_PATH
+BASH_MODULE_PATH=$(command dirname "${BASH_SOURCE[0]}")/modules
+
+#+------------------+
+#| DON'T DEACTIVATE |
+#+------------------+
+# Use to confirm feature loading
+source "${BASH_MODULE_PATH}/__style"
+
+#+----------------------------+
+#| ACTIVATE/DEACTIVATE MODULE |
+#+----------------------------+
+# Improve inputrc
+source "${BASH_MODULE_PATH}/inputrc"
+
+# Improve prompt:
+# - Bash
+source "${BASH_MODULE_PATH}/prompt-override"
+# source "${BASH_MODULE_PATH}/prompt-override" NO_STYLE_PROMPT
+# - Starship
+# source "${BASH_MODULE_PATH}/prompt-starship"

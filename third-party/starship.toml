@@ -1,0 +1,355 @@
+# Command line format
+
+format = """
+$time\
+$username\
+$hostname\
+$directory\
+$cmd_duration\
+$line_break\
+$status\
+$git_status\
+$all\
+$container\
+$shell\
+$character"""
+
+add_newline = false
+
+# Generic module specification
+
+[status]
+# Symbol
+not_executable_symbol = '🚫'
+not_found_symbol = '🔍'
+sigint_symbol = '🧱'
+signal_symbol = '⚡'
+success_symbol = '✓'
+symbol = '✗'
+# Global
+disabled = false
+format = '[$symbol ? $status]($style) '
+map_symbol = false
+pipestatus = false
+pipestatus_format = '\[$pipestatus\] => [$symbol$common_meaning$signal_name$maybe_int]($style)'
+pipestatus_segment_format = ''
+pipestatus_separator = '|'
+recognize_signal_code = true
+style = 'bold yellow'
+failure_style = 'bold red'
+success_style = 'bold green dimmed'
+
+[time]
+disabled = false
+format = '[\[$time\]]($style) '
+style = 'yellow bold'
+time_format = '%F %T'
+time_range = '-'
+use_12hr = false
+utc_time_offset = 'local'
+
+[username]
+aliases = {}
+detect_env_vars = []
+disabled = false
+format = '[$user]($style) '
+show_always = true
+style_root = 'fg:yellow bg:red bold'
+style_user = 'white bold'
+
+[hostname]
+detect_env_vars = []
+disabled = false
+format = '[on](white) [$ssh_symbol$hostname]($style) '
+ssh_only = false
+ssh_symbol = '>__'
+style = 'blue bold dimmed'
+trim_at = '.'
+
+[directory]
+disabled = false
+format = 'in(blue) [$path]($style)[$read_only]($read_only_style) '
+home_symbol = '~'
+read_only = '🔒'
+read_only_style = 'bg:red'
+repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+style = 'cyan bold underline'
+truncate_to_repo = false
+truncation_length = 3
+truncation_symbol = ''
+use_os_path_sep = true
+
+[cmd_duration]
+disabled = false
+format = '[took](white) [$duration]($style) '
+min_time = 2_000
+show_milliseconds = false
+show_notifications = false
+style = 'bold yellow'
+
+[line_break]
+disabled = false
+
+[git_status]
+ahead = ">"
+behind = "<"
+diverged = "<>"
+renamed = "r"
+deleted = "x"
+
+[container]
+symbol = '▦'
+style = 'bold cyan dimmed'
+format = '[$symbol \[$name\]]($style) '
+disabled = false
+
+[shell]
+# Indicator
+bash_indicator = 'bash'
+cmd_indicator = 'cmd'
+elvish_indicator = 'elvish'
+fish_indicator = 'fish'
+ion_indicator = 'ion'
+nu_indicator = 'nu'
+powershell_indicator = 'psh'
+tcsh_indicator = 'tcsh'
+unknown_indicator = 'mystery sh'
+xonsh_indicator = 'xonsh'
+zsh_indicator = 'zsh'
+# Global
+disabled = false
+format = '[$indicator]($style) '
+style = 'cyan bold'
+
+[character]
+# Symbol
+error_symbol = '[:\( x](red bold)'
+success_symbol = '[:\) >](green bold)'
+vimcmd_replace_one_symbol = '[V](bold purple)'
+vimcmd_replace_symbol = '[V](bold purple)'
+vimcmd_symbol = '[V](bold green)'
+vimcmd_visual_symbol = '[V](bold yellow)'
+# Global
+disabled = false
+format = '$symbol '
+
+# Specialized module specification
+
+# Plain text module specification
+
+[git_commit]
+tag_symbol = " tag "
+
+[aws]
+symbol = "aws "
+
+[azure]
+symbol = "az "
+
+[bun]
+symbol = "bun "
+
+[c]
+symbol = "C "
+
+[cobol]
+symbol = "cobol "
+
+[conda]
+symbol = "conda "
+
+[crystal]
+symbol = "cr "
+
+[cmake]
+symbol = "cmake "
+
+[daml]
+symbol = "daml "
+
+[dart]
+symbol = "dart "
+
+[deno]
+symbol = "deno "
+
+[dotnet]
+symbol = ".NET "
+
+[docker_context]
+symbol = "docker "
+
+[elixir]
+symbol = "exs "
+
+[elm]
+symbol = "elm "
+
+[fennel]
+symbol = "fnl "
+
+[fossil_branch]
+symbol = "fossil "
+
+[gcloud]
+symbol = "gcp "
+
+[git_branch]
+symbol = "git "
+
+[gleam]
+symbol = "gleam "
+
+[golang]
+symbol = "go "
+
+[gradle]
+symbol = "gradle "
+
+[guix_shell]
+symbol = "guix "
+
+[hg_branch]
+symbol = "hg "
+
+[java]
+symbol = "java "
+
+[julia]
+symbol = "jl "
+
+[kotlin]
+symbol = "kt "
+
+[lua]
+symbol = "lua "
+
+[nodejs]
+symbol = "nodejs "
+
+[memory_usage]
+symbol = "memory "
+
+[meson]
+symbol = "meson "
+
+[nats]
+symbol = "nats "
+
+[nim]
+symbol = "nim "
+
+[nix_shell]
+symbol = "nix "
+
+[ocaml]
+symbol = "ml "
+
+[opa]
+symbol = "opa "
+
+[os.symbols]
+AIX = "aix "
+Alpaquita = "alq "
+AlmaLinux = "alma "
+Alpine = "alp "
+Amazon = "amz "
+Android = "andr "
+Arch = "rch "
+Artix = "atx "
+CentOS = "cent "
+Debian = "deb "
+DragonFly = "dfbsd "
+Emscripten = "emsc "
+EndeavourOS = "ndev "
+Fedora = "fed "
+FreeBSD = "fbsd "
+Garuda = "garu "
+Gentoo = "gent "
+HardenedBSD = "hbsd "
+Illumos = "lum "
+Kali = "kali "
+Linux = "lnx "
+Mabox = "mbox "
+Macos = "mac "
+Manjaro = "mjo "
+Mariner = "mrn "
+MidnightBSD = "mid "
+Mint = "mint "
+NetBSD = "nbsd "
+NixOS = "nix "
+OpenBSD = "obsd "
+OpenCloudOS = "ocos "
+openEuler = "oeul "
+openSUSE = "osuse "
+OracleLinux = "orac "
+Pop = "pop "
+Raspbian = "rasp "
+Redhat = "rhl "
+RedHatEnterprise = "rhel "
+RockyLinux = "rky "
+Redox = "redox "
+Solus = "sol "
+SUSE = "suse "
+Ubuntu = "ubnt "
+Ultramarine = "ultm "
+Unknown = "unk "
+Void = "void "
+Windows = "win "
+
+[package]
+symbol = "pkg "
+
+[perl]
+symbol = "pl "
+
+[php]
+symbol = "php "
+
+[pijul_channel]
+symbol = "pijul "
+
+[pulumi]
+symbol = "pulumi "
+
+[purescript]
+symbol = "purs "
+
+[python]
+symbol = "py "
+
+[quarto]
+symbol = "quarto "
+
+[raku]
+symbol = "raku "
+
+[ruby]
+symbol = "rb "
+
+[rust]
+symbol = "rs "
+
+[scala]
+symbol = "scala "
+
+[spack]
+symbol = "spack "
+
+[solidity]
+symbol = "solidity "
+
+[sudo]
+symbol = "sudo "
+
+[swift]
+symbol = "swift "
+
+[typst]
+symbol = "typst "
+
+[terraform]
+symbol = "terraform "
+
+[zig]
+symbol = "zig "

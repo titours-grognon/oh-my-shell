@@ -1,0 +1,135 @@
+# shellcheck disable=SC2148
+# (‾)-'"""""'-(‾)
+#  /           \
+# /   Ō  ●  Ō   \
+# \   "( - )"   /
+#  '-.._____..-'
+
+if [[ "${1}" == "NO_STYLE_PROMPT" ]]
+then
+    NO_STYLE_PROMPT=true
+else
+    NO_STYLE_PROMPT=false
+fi
+
+#+----------+
+#| FUNCTION |
+#+----------+
+
+function __display_end_of_last_command() {
+    local PROMPT_TIMESTAMP
+    PROMPT_TIMESTAMP="[$(date "+%Y-%m-%d %H:%M:%S")]"
+
+    if ${NO_STYLE_PROMPT}
+    then
+        echo -e "${PROMPT_TIMESTAMP}"
+    else
+        echo -e "$(__style FG_YELLOW BOLD)${PROMPT_TIMESTAMP}$(__style)"
+    fi
+}
+
+function __display_user() {
+    local PROMPT_USER
+    PROMPT_USER="$(command -p id --user --name)"
+
+    if ${NO_STYLE_PROMPT}
+    then
+        echo " ${PROMPT_USER}"
+    elif [[ $(command id --user) == 0 ]]
+    then
+        echo -e " $(__style BG_YELLOW FG_RED BOLD)${PROMPT_USER}$(__style)"
+    else
+        echo -e " $(__style BOLD)${PROMPT_USER}$(__style)"
+    fi
+}
+
+function __display_type_connection() {
+    local PROMPT_SSH
+    PROMPT_SSH="$(command hostname)"
+
+    if [[ -n "${SSH_CLIENT}" ]]
+    then
+        PROMPT_SSH=">__${PROMPT_SSH}"
+    fi
+
+    if ${NO_STYLE_PROMPT}
+    then
+        echo -e " on ${PROMPT_SSH}"
+    else
+        echo -e " on $(__style FG_MAGENTA BOLD)${PROMPT_SSH}$(__style)"
+    fi
+}
+
+function __display_current_dir() {
+    local PROMPT_CURRENT_DIR
+    PROMPT_CURRENT_DIR="$(command -p pwd -P)"
+
+    if ${NO_STYLE_PROMPT}
+    then
+        echo -e " in ${PROMPT_CURRENT_DIR}"
+    else
+        echo -e " in $(__style FG_CYAN BOLD UNDERLINE)${PROMPT_CURRENT_DIR}$(__style)"
+    fi
+}
+
+function __display_return_code() {
+    local RC="${PIPESTATUS[0]}"
+    local PROMPT_RC
+
+    if [[ ${RC} == 0 ]]
+    then
+        PROMPT_RC="✓"
+    else
+        PROMPT_RC="✗ ? ${RC}"
+    fi
+
+    if ${NO_STYLE_PROMPT}
+    then
+        echo -e " ${PROMPT_RC}"
+    elif [[ ${RC} == 0 ]]
+    then
+        echo -e " $(__style FG_GREEN)${PROMPT_RC}$(__style)"
+    else
+        echo -e " $(__style FG_RED)${PROMPT_RC}$(__style)"
+    fi
+}
+
+function __display_git_branch() {
+    local PROMPT_GIT_BRANCH
+    PROMPT_GIT_BRANCH=""
+
+    if [[ $(command -v git) ]] && command git symbolic-ref HEAD >/dev/null 2>&1
+    then
+        PROMPT_GIT_BRANCH="($(command git symbolic-ref --short HEAD))"
+    fi
+
+    if ${NO_STYLE_PROMPT}
+    then
+        echo -e " ${PROMPT_GIT_BRANCH}"
+    else
+        echo -en " $(__style FG_RED BOLD)${PROMPT_GIT_BRANCH}$(__style)"
+    fi
+}
+
+#+---------------+
+#| CUSTOM PROMPT |
+#+---------------+
+
+PS1_INFO="\
+\$(__display_end_of_last_command)\
+\$(__display_user)\
+\$(__display_type_connection)\
+\$(__display_current_dir)\\n\
+\$(__display_return_code)\
+\$(__display_git_branch)\
+"
+
+PS1_PROMPT_USER="\
+\$(__style FG_CYAN BOLD) \\$ \$(__style)"
+
+PS1="${PS1_INFO}${PS1_PROMPT_USER}"
+
+# shellcheck disable=SC2090
+export PS1
+
+echo -en "$(__style FG_GREEN BOLD)--- Prompt overrided natively ---\n$(__style)"
