@@ -1,0 +1,69 @@
+"+---------------+
+"| CONFIGURATION |
+"+---------------+
+set encoding=utf-8
+set fileencoding=utf-8
+
+syntax reset
+syntax on
+
+set endofline
+
+" Display linenumber
+set number
+" Set background dark
+set t_Co=256
+set background=dark
+" Highlight current line
+set cursorline
+set cursorlineopt=number
+
+set completeopt=longest,menuone
+
+set shiftwidth=4
+set tabstop=4
+set noautoindent
+set smartindent
+set smarttab
+set expandtab
+
+filetype on
+filetype plugin on
+filetype indent on
+
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+
+set textwidth=0
+set wrap
+set wrapmargin=0
+set linebreak
+
+set ruler
+
+set cmdheight=1
+
+set showcmd
+set showmode
+set showmatch
+set hlsearch
+
+set backspace=eol,indent,start
+
+set magic
+
+set list
+set listchars=eol:$,trail:•
+
+set wmnu
+set wildmode=list:longest,list:full
+
+"+----------------+
+"| THEME OVERLOAD |
+"+----------------+
+
+highlight Comment ctermfg=darkgreen ctermbg=NONE cterm=NONE
+highlight CursorLineNr ctermfg=white ctermbg=darkgreen cterm=bold
+highlight NonText ctermfg=darkgrey ctermbg=NONE cterm=underline
+
+highlight! link PopupNotification Todo
+highlight Todo ctermfg=red ctermbg=yellow cterm=bold
